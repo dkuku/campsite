@@ -11,12 +11,12 @@
     </header>
 
     <div class="card-deck">
-        <% camps.map((camp)=>{%>
+        <% campsites.map((campsite)=>{%>
         <div class="col-md-3 col-sm-6">
             <div class="card">
-                <img class="card-img-top" src="<%= camp.image %>" />
+                <img class="card-img-top" src="<%= campsite.image %>" />
                 <div class="card-body">
-                    <h3 class="card-title"><%=camp.name%></h3>
+                    <h3 class="card-title"><%=campsite.name%></h3>
                 </div>
             </div>
         </div>
