@@ -1,0 +1,27 @@
+<% include header %>
+<div class="container">
+    <header class="jumbotron">
+        <div class="container">
+            <h1>Welcome to Campsite</h1>
+            <p>Check our campgrounds</p>
+            <p>
+                <a class="btn btn-primary btn-lg" href="/campsites/new">Add new Campsite</a>
+            </p>
+        </div>
+    </header>
+
+    <div class="card-deck">
+        <% camps.map((camp)=>{%>
+        <div class="col-md-3 col-sm-6">
+            <div class="card">
+                <img class="card-img-top" src="<%= camp.image %>" />
+                <div class="card-body">
+                    <h3 class="card-title"><%=camp.name%></h3>
+                </div>
+            </div>
+        </div>
+        <% })%>
+    </div>
+</div>
+
+<% include footer %>
