@@ -16,22 +16,27 @@ router.get('/', (req, res, next) => {
   });
 });
 
-router.post('/', (req, res, next) => {
-  const {name , imageUrl } = req.body;
+router.post('/', isLoggedIn, (req, res, next) => {
+  const {name , imageUrl, description } = req.body;
+  const author = {
+    id: req.user._id,
+    username: req.user.username
+  }
   Campsite.create({
     name,
-    image: imageUrl
+    image: imageUrl,
+    description,
+    author
   },(err, campsite)=>{
     if (err){
       console.log(err)
     } else{
-      console.log(campsite)
+      res.redirect('/')
     }
   })
-  res.redirect('/')
 });
 
-router.get('/new',(req, res, next)=>{
+router.get('/new', isLoggedIn, (req, res, next)=>{
   res.render('campsites/new')
 })
 
@@ -45,3 +50,9 @@ router.get('/:id', (req, res, next) => {
   });
 });
 
+function isLoggedIn(req, res, next){
+  if (req.isAuthenticated()){
+    return next();
+  }
+  res.redirect('/login')
+}
