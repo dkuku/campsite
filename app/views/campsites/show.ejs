@@ -1,20 +1,43 @@
 <% include ../partials/header %>
-    <div class="card-deck">
-        <div class="col-md-3 col-sm-6">
-            <div class="card">
-                <img class="card-img-top" src="<%= campsite.image %>" />
-                <div class="card-body">
-                    <h3 class="card-title"><%= campsite.name %></h3>
-                    <p class="card-text"><%= campsite.description %></p>
-                    <a class="btn btn-success" href="/campsites/<%= campsite._id %>/comments/new">Add new comment</a>
-                </div>
-                <ul class="list-group list-group-flush">
-                <% campsite.comments.map((comment)=>{%>
-                    <li class="list-group-item"><%= comment.author %> - <%= comment.text %></li>
-                <% }) %>
-                </ul>
-            </div>
-        </div>
+<div class="container">
+  <div class="row">
+    <div class="col-md-3">
+      <p class="lead">Campsite</p>
+      <div class="list-group">
+        <li class="list-group-item active">Info 1</li>
+        <li class="list-group-item">Info 2</li>
+        <li class="list-group-item">Info 3</li>
+      </div>
     </div>
+    <div class="col-md-9">
+      <div class="card m-3">
+        <img class="card-img-top" src="<%= campsite.image %>" />
+        <div class="card-body">
+          <h4 class="float-right">$9.00/night</h4>
+          <h4 class="card-title"><a href="#"><%= campsite.name %> </a></h4>
+          <p><%= campsite.description %></p>
+        </div>
+      </div>
+      <div class="card bg-light m-3">
+        <div class="card-header">
+          <a class="btn btn-success float-right" href="/campsites/<%= campsite._id %>/comments/new">Add new comment</a>
+        </div>
+        <div class="card-body">
+          <% campsite.comments.map((comment)=>{%>
+            <div class="card-title">
+              <strong>
+                <%= comment.author %>
+              </strong>
+            <span class="float-right">10 days ago</span>
+            </div>
+            <p class="card-text">
+              <%= comment.text %>
+            </p>
+          <% }) %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <% include ../partials/footer %>
