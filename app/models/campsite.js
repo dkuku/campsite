@@ -1,15 +1,19 @@
-// Example model
-
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const CampsiteSchema = new Schema({
+const campsiteSchema = new Schema({
   name: String,
   image: String,
+  description: String,
+  comments: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Comment'
+    }
+  ]
 });
 
-CampsiteSchema.virtual('date')
+campsiteSchema.virtual('date')
   .get(() => this._id.getTimestamp());
 
-mongoose.model('Campsite', CampsiteSchema);
-
+module.exports = mongoose.model('Campsite', campsiteSchema);

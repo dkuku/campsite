@@ -2,10 +2,7 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const Campsite = mongoose.model('Campsite');
-
-const seed = require('../seed/seed')
-//const camps = seed.createCampSites(15);
+const Campsite = require('../models/campsite');
 
 module.exports = (app) => {
   app.use('/', router);
@@ -39,3 +36,14 @@ router.post('/campsites', (req, res, next) => {
 router.get('/campsites/new',(req, res, next)=>{
   res.render('new')
 })
+
+router.get('/campsites/:id', (req, res, next) => {
+  Campsite.findById(req.params.id, (err, campsite) => {
+    console.log(campsite)
+    if (err) return next(err);
+    res.render('show', {
+      campsite
+    });
+  });
+});
+
