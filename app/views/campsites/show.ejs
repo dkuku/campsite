@@ -19,9 +19,11 @@
         </div>
       </div>
       <div class="card bg-light m-3">
+        <% if (loggedInUser){ %>
         <div class="card-header">
           <a class="btn btn-success float-right" href="/campsites/<%= campsite._id %>/comments/new">Add new comment</a>
         </div>
+        <% } %>
         <div class="card-body">
           <% campsite.comments.map((comment)=>{%>
             <div class="card-title">

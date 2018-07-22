@@ -19,7 +19,7 @@ router.get('/campsites', (req, res, next) => {
   });
 });
 
-router.post('/campsites/:id/comments', (req, res, next) => {
+router.post('/campsites/:id/comments',isLoggedIn, (req, res, next) => {
   Campsite.findById(req.params.id, (err, campsite)=>{
     Comment.create(req.body.comment ,(err, comment)=>{
       if (err){
@@ -41,7 +41,7 @@ router.post('/campsites/:id/comments', (req, res, next) => {
   });
 })
 
-router.get('/campsites/:id/comments/new',(req, res, next)=>{
+router.get('/campsites/:id/comments/new', (req, res, next)=>{
   Campsite.findById(req.params.id, (err, campsite)=>{
     if (err){
       console.log(err)
@@ -64,3 +64,9 @@ router.get('/campsites/:id/comments/new',(req, res, next)=>{
     });
   });
 
+function isLoggedIn(req, res, next){
+  if (req.isAuthenticated()){
+    return next();
+  }
+  res.redirect('/login')
+}

@@ -8,8 +8,12 @@ const bodyParser = require('body-parser');
 const compress = require('compression');
 const methodOverride = require('method-override');
 const sassMiddleware = require('node-sass-middleware');
+const localStrategy = require('passport-local');
+const expressSession = require('express-session');
 
-module.exports = (app, config) => {
+const User = require('../app/models/user');
+
+module.exports = (app, config, passport) => {
   const env = process.env.NODE_ENV || 'development';
   app.locals.ENV = env;
   app.locals.ENV_DEVELOPMENT = env == 'development';
@@ -18,6 +22,21 @@ module.exports = (app, config) => {
   app.set('view engine', 'ejs');
 
   // app.use(favicon(config.root + '/public/img/favicon.ico'));
+  app.use(expressSession({
+    secret: 'express secret for this app',
+    resave: false,
+    saveUninitialized: false
+  }));
+  app.use(passport.initialize());
+  app.use(passport.session());
+  passport.use(new localStrategy(User.authenticate()));
+  passport.serializeUser(User.serializeUser());
+  passport.deserializeUser(User.deserializeUser());
+  app.use(function (req, res, next) {
+    res.locals.loggedInUser = req.user;
+    next();
+  });
+
   app.use(logger('dev'));
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({
