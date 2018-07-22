@@ -1,14 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
 const Campsite = require('../models/campsite');
 
 module.exports = (app) => {
-  app.use('/', router);
+  app.use('/campsites', router);
 };
 
-router.get('/campsites', (req, res, next) => {
+router.get('/', (req, res, next) => {
   Campsite.find((err, campsites) => {
     if (err) return next(err);
     res.render('campsites/index', {
@@ -18,7 +16,7 @@ router.get('/campsites', (req, res, next) => {
   });
 });
 
-router.post('/campsites', (req, res, next) => {
+router.post('/', (req, res, next) => {
   const {name , imageUrl } = req.body;
   Campsite.create({
     name,
@@ -30,14 +28,14 @@ router.post('/campsites', (req, res, next) => {
       console.log(campsite)
     }
   })
-  res.redirect('/campsites')
+  res.redirect('/')
 });
 
-router.get('/campsites/new',(req, res, next)=>{
+router.get('/new',(req, res, next)=>{
   res.render('campsites/new')
 })
 
-router.get('/campsites/:id', (req, res, next) => {
+router.get('/:id', (req, res, next) => {
   Campsite.findById(req.params.id).populate('comments').exec((err, campsite) => {
     console.log(campsite)
     if (err) return next(err);
