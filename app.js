@@ -27,6 +27,20 @@ seedDB()
 
 module.exports = require('./config/express')(app, config);
 
+//hot reload in development
+if(app.locals.ENV_DEVELOPMENT) {
+  const chokidar = require('chokidar');
+
+  const watcher = chokidar.watch('./app');
+  watcher.on('ready', function() {
+    watcher.on('all', function() {
+      console.log("Clearing /dist/ module cache from server")
+      Object.keys(require.cache).forEach(function(id) {
+        if (/[\/\\]app[\/\\]/.test(id)) delete require.cache[id]
+      })
+    })
+  })
+}
 app.listen(config.port, () => {
   console.log('Express server listening on port ' + config.port);
 });
