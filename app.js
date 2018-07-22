@@ -23,7 +23,7 @@ models.forEach(function (model) {
 const app = express();
 
 const seedDB = require('./app/seed/seed')
-seedDB()
+//seedDB()
 //const camps = seed.createCampSites(15);
 
 module.exports = require('./config/express')(app, config, passport );

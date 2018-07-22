@@ -1,10 +1,10 @@
 const express = require('express');
-const router = express.Router({mergeParams: true});
+const router = express.Router(
 const Campsite = require('../models/campsite');
 const Comment = require('../models/comment');
 
 module.exports = (app) => {
-  app.use('/campsites/:id/comments', router);
+app.use('/campsites/:id/comments', router);
 };
 
 router.post('/',isLoggedIn, (req, res, next) => {
@@ -14,6 +14,10 @@ router.post('/',isLoggedIn, (req, res, next) => {
         console.log(err)
         res.redirect('/campsites')
       } else{
+        comment.author.id = req.user._id;
+        comment.author.username = req.user.username;
+        comment.save();
+
         campsite.comments.push(comment);
         campsite.save((err)=>{
           if (err){
@@ -21,7 +25,7 @@ router.post('/',isLoggedIn, (req, res, next) => {
             res.redirect('/campsites')
           } else{
             console.log("comment added")
-            res.redirect('/campsites/'+req.params.id)
+            res.redirect('/campsites/'+campsite._id)
           }
         })
       }
