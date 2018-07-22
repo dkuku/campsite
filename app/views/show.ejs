@@ -5,7 +5,7 @@
                 <img class="card-img-top" src="<%= campsite.image %>" />
                 <div class="card-body">
                     <h3 class="card-title"><%= campsite.name %></h3>
-                    <p class="card-text"><% =campsite.description %></p>
+                    <p class="card-text"><%= campsite.description %></p>
                 </div>
                 <ul class="list-group list-group-flush">
                 <% campsite.comments.map((comment)=>{%>

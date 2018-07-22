@@ -38,7 +38,7 @@ router.get('/campsites/new',(req, res, next)=>{
 })
 
 router.get('/campsites/:id', (req, res, next) => {
-  Campsite.findById(req.params.id, (err, campsite) => {
+  Campsite.findById(req.params.id).populate('comments').exec((err, campsite) => {
     console.log(campsite)
     if (err) return next(err);
     res.render('show', {

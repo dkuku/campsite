@@ -53,11 +53,14 @@ function seedDB(){
                 if(err){
                   console.log(err);
                 } else {
-                  campsite.comments.push(comment._id);
-                  campsite.save();
-                  console.log("--------")
-                  console.log(campsite)
-                  console.log("Created new comment");
+                  campsite.comments.push(comment);
+                  campsite.save(function(err, camp){
+                    if (err){
+                      console.log(err)
+                    } else {
+                      console.log("Created new comment");
+                    }
+                  });
                 }
               });
             })

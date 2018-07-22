@@ -11,7 +11,7 @@ const campsiteSchema = new Schema({
       ref: 'Comment'
     }
   ]
-});
+}, { usePushEach: true });
 
 campsiteSchema.virtual('date')
   .get(() => this._id.getTimestamp());
