@@ -7,12 +7,13 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const compress = require('compression');
 const methodOverride = require('method-override');
+const sassMiddleware = require('node-sass-middleware');
 
 module.exports = (app, config) => {
   const env = process.env.NODE_ENV || 'development';
   app.locals.ENV = env;
   app.locals.ENV_DEVELOPMENT = env == 'development';
-  
+
   app.set('views', config.root + '/app/views');
   app.set('view engine', 'ejs');
 
@@ -24,6 +25,12 @@ module.exports = (app, config) => {
   }));
   app.use(cookieParser());
   app.use(compress());
+  app.use(sassMiddleware({
+    src: config.root,
+    dest: config.root + '/public',
+    debug: true,
+    outputStyle: 'compressed',
+  }))
   app.use(express.static(config.root + '/public'));
   app.use(methodOverride());
 
