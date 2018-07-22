@@ -11,7 +11,7 @@ module.exports = (app) => {
 router.get('/campsites', (req, res, next) => {
   Campsite.find((err, campsites) => {
     if (err) return next(err);
-    res.render('campsites', {
+    res.render('campsites/index', {
       title: 'campsites',
       campsites
     });
@@ -34,14 +34,14 @@ router.post('/campsites', (req, res, next) => {
 });
 
 router.get('/campsites/new',(req, res, next)=>{
-  res.render('new')
+  res.render('campsites/new')
 })
 
 router.get('/campsites/:id', (req, res, next) => {
   Campsite.findById(req.params.id).populate('comments').exec((err, campsite) => {
     console.log(campsite)
     if (err) return next(err);
-    res.render('show', {
+    res.render('campsites/show', {
       campsite
     });
   });
