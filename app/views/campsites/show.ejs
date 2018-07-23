@@ -19,9 +19,9 @@
           <p><em>Submitted by <%= campsite.author.username %></em></p>
         <% if (loggedInUser && campsite.author.id.equals(loggedInUser._id)){ %>
         <div class="card-extra">
-              <a class="btn btn-warning" href="/campsites/<%= campsite._id %>/edit">Edit</a>
+              <a class="btn btn-warning btn-xs" href="/campsites/<%= campsite._id %>/edit">Edit</a>
           <form class="d-inline" action="/campsites/<%= campsite._id %>?_method=DELETE %>" method="POST">
-            <button class="btn btn-danger float-right">Delete</button>
+            <button class="btn btn-danger btn-xs float-right">Delete</button>
           </form>
         </div>
         <% } %>
@@ -39,12 +39,25 @@
               <strong>
                 <%= comment.author.username %>
               </strong>
-            <span class="float-right">10 days ago</span>
+              <span class="float-right">10 days ago</span>
+              <p class="card-text">
+                <%= comment.text %>
+              </p>
             </div>
-            <p class="card-text">
-              <%= comment.text %>
-            </p>
-          <% }) %>
+            <% if (loggedInUser && comment.author.id.equals(loggedInUser._id)){ %>
+              <div class="card-body">
+                <a class="btn btn-sm btn-warning"
+                  href="/campsites/<%= campsite._id %>/comments/<%= comment._id %>/edit" >
+                  Edit
+                </a>
+                <form class="d-inline"
+                  action="/campsites/<%= campsite._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
+                  <button class="btn btn-danger btn-sm float-right">Delete</button>
+                </form>
+              </div>
+              <% } %>
+            <% }) %>
+          </div>
         </div>
       </div>
     </div>
