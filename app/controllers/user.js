@@ -15,14 +15,21 @@ router.post('/register', (req, res, next) => {
   const newUser = new User({username: req.body.username});
   User.register(newUser, req.body.password, (err, user)=>{
     if (err){
-      console.log(err);
+      req.flash('error', err.message);
       return res.render('auth/register');
     } else {
       passport.authenticate('local', function(err, user, info) {
-        if (err) { return next(err); }
+        if (err) {
+          req.flash('error', err.message);
+          return next(err);
+        }
         if (!user) { return res.redirect('/register'); }
         req.logIn(user, function(err) {
-          if (err) { return next(err); }
+          if (err) {
+            req.flash('error', err);
+            return next(err);
+          }
+          req.flash('success', 'Welcome to Campsite'+user.username);
           return res.redirect('/campsites');
         });
       })(req, res, next);

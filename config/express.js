@@ -10,6 +10,7 @@ const methodOverride = require('method-override');
 const sassMiddleware = require('node-sass-middleware');
 const localStrategy = require('passport-local');
 const expressSession = require('express-session');
+const flash = require('connect-flash');
 
 const User = require('../app/models/user');
 
@@ -27,6 +28,7 @@ module.exports = (app, config, passport) => {
     resave: false,
     saveUninitialized: false
   }));
+  app.use(flash());
   app.use(passport.initialize());
   app.use(passport.session());
   passport.use(new localStrategy(User.authenticate()));
@@ -34,6 +36,8 @@ module.exports = (app, config, passport) => {
   passport.deserializeUser(User.deserializeUser());
   app.use(function (req, res, next) {
     res.locals.loggedInUser = req.user;
+    res.locals.error = req.flash('error');
+    res.locals.success = req.flash('success');
     next();
   });
 
