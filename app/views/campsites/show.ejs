@@ -13,14 +13,15 @@
       <div class="card m-3">
         <img class="card-img-top" src="<%= campsite.image %>" />
         <div class="card-body">
-          <h4 class="float-right">$9.00/night</h4>
+        <% console.log(campsite.price) %>
+          <h4 class="float-right">$<%= campsite.price %>/night</h4>
           <h4 class="card-title"><a href="#"><%= campsite.name %> </a></h4>
           <p><%= campsite.description %></p>
-          <p><em>Submitted by <%= campsite.author.username %></em></p>
+          <p><em>Submitted by <%= campsite.author.username %>, <%= moment(campsite.createdAt).fromNow() %></em></p>
         <% if (loggedInUser && campsite.author.id.equals(loggedInUser._id)){ %>
         <div class="card-extra">
               <a class="btn btn-warning btn-xs" href="/campsites/<%= campsite._id %>/edit">Edit</a>
-          <form class="d-inline" action="/campsites/<%= campsite._id %>?_method=DELETE %>" method="POST">
+           <form class="d-inline" action="/campsites/<%= campsite._id %>?_method=DELETE %>" method="POST">
             <button class="btn btn-danger btn-xs float-right">Delete</button>
           </form>
         </div>
@@ -28,23 +29,26 @@
         </div>
       </div>
       <div class="card bg-light m-3">
-        <% if (loggedInUser){ %>
+
+  <% if (loggedInUser){ %>
         <div class="card-header">
           <a class="btn btn-success float-right" href="/campsites/<%= campsite._id %>/comments/new">Add new comment</a>
         </div>
         <% } %>
         <div class="card-body">
-          <% campsite.comments.map((comment)=>{%>
-            <div class="card-title">
+
+  <% campsite.comments.map((comment)=>{%>
+
+  <div class="card-title">
               <strong>
                 <%= comment.author.username %>
               </strong>
-              <span class="float-right">10 days ago</span>
+              <span class="float-right"><%= moment(comment.createdAt).fromNow() %></span>
               <p class="card-text">
                 <%= comment.text %>
               </p>
             </div>
-            <% if (loggedInUser && comment.author.id.equals(loggedInUser._id)){ %>
+             <% if (loggedInUser && comment.author.id.equals(loggedInUser._id)){ %>
               <div class="card-body">
                 <a class="btn btn-sm btn-warning"
                   href="/campsites/<%= campsite._id %>/comments/<%= comment._id %>/edit" >

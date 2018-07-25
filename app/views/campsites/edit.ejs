@@ -12,6 +12,9 @@
           <input class="form-control" name="campsite[description]" type="text" value="<%= campsite.description %>"/>
         </div>
         <div class="form-group">
+          <input class="form-control" name="campsite[price]" type="number" value="<%= campsite.price %>" min="0.01" step="0.01"/>
+        </div>
+        <div class="form-group">
           <input class="form-control" name="campsite[image]" type="text" value="<%= campsite.image %>"/>
         </div>
         <div class="form-group">

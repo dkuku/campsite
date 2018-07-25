@@ -8,15 +8,14 @@ module.exports = (app) => {
 };
 
 router.get('/register', (req, res, next) => {
-  res.render('auth/register');
+  res.render('auth/register', {page: 'register'});
 });
 
 router.post('/register', (req, res, next) => {
   const newUser = new User({username: req.body.username});
   User.register(newUser, req.body.password, (err, user)=>{
     if (err){
-      req.flash('error', err.message);
-      return res.render('auth/register');
+      return res.render('auth/register', {error: err.message});
     } else {
       passport.authenticate('local', function(err, user, info) {
         if (err) {
@@ -38,7 +37,7 @@ router.post('/register', (req, res, next) => {
 })
 
 router.get('/login', (req, res, next) => {
-  res.render('auth/login');
+  res.render('auth/login', {page: 'login'});
 });
 
 router.post('/login',

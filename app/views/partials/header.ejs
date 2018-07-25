@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width">
+  <!-- Make site responsive on mobile/tablet -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Campsites</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link rel="stylesheet" href="/css/style.css">
@@ -16,13 +17,16 @@
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
+  <!--<ul class="nav navbar-nav">
+    <li class="<%= typeof page !== 'undefined' && page === 'campgrounds' ? 'active' : '' %>"><a href="/campsites">Home</a></li>
+  </ul>-->
   <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
     <ul class="navbar-nav">
       <% if (!loggedInUser){ %>
-        <li class="nav-item">
+        <li class="<%= typeof page !== 'undefined' && page === 'login' ? 'active' : '' %>">
           <a class="nav-link" href="/login">Login<span class="sr-only">(current)</span></a>
         </li>
-        <li class="nav-item">
+        <li class="<%= typeof page !== 'undefined' && page === 'register' ? 'active' : '' %>">
           <a class="nav-link" href="/register">Sign up</a>
         </li>
       <%  }else{ %>

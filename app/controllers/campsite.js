@@ -12,13 +12,14 @@ router.get('/', (req, res, next) => {
     if (err) return next(err);
     res.render('campsites/index', {
       title: 'campsites',
-      campsites
+      campsites,
+      page: 'campsites'
     });
   });
 });
 
 router.post('/', middleware.isLoggedIn, (req, res, next) => {
-  const {name , image, description } = req.body;
+  const {name, price, image, description } = req.body;
   const author = {
     id: req.user._id,
     username: req.user.username
@@ -27,6 +28,7 @@ router.post('/', middleware.isLoggedIn, (req, res, next) => {
     name,
     image,
     description,
+    price,
     author
   },(err, campsite)=>{
     if (err){
