@@ -30,7 +30,7 @@
     "serve-favicon": "^2.3.0"
   },
   "devDependencies": {
-    "chai": "^3.5.0",
+    "chai": "^4.2.0",
     "chokidar": "^2.0.4",
     "debug": "^2.2.0",
     "faker": "^4.1.0",
