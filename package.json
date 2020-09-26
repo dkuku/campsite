@@ -42,7 +42,7 @@
     "mocha": "^4.0.1",
     "nyc": "^10.0.0",
     "request": "^2.60.0",
-    "supertest": "^2.0.0",
+    "supertest": "^5.0.0",
     "time-grunt": "^1.2.1"
   }
 }
